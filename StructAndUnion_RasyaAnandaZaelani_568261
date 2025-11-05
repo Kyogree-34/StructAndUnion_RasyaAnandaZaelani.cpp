@@ -1,0 +1,113 @@
+#include <iostream>
+#include <iomanip>
+#include <string>
+using namespace std;
+
+// Struct untuk menyimpan data mahasiswa
+struct studentType {
+    string studentFName;
+    string studentLName;
+    int testScore;
+    char grade;
+};
+
+// Jumlah siswa dalam kelas
+const int NUM_STUDENTS = 20;
+
+// (a) Fungsi untuk membaca data siswa ke dalam array
+void readData(studentType students[], int size) {
+    string firstNames[NUM_STUDENTS] = {
+        "Ash", "Misty", "Brock", "Serena", "Cynthia",
+        "Ivy", "Red", "Blue", "Leaf", "Dawn",
+        "Pikachu", "Eevee", "Snorlax", "Lucario", "Gengar",
+        "Greninja", "Charizard", "Bulbasaur", "Squirtle", "Charmander"
+    };
+
+    string lastNames[NUM_STUDENTS] = {
+        "Ketchum", "Waterflower", "Slate", "Yvonne", "Shirona",
+        "Anderson", "Oak", "Oak", "Green", "Berlitz",
+        "Volt", "Flare", "Nap", "Aura", "Shade",
+        "Ninja", "Flame", "Leaf", "Shell", "Blaze"
+    };
+
+    int scores[NUM_STUDENTS] = {
+        95, 82, 78, 88, 100,
+        91, 85, 70, 67, 80,
+        100, 99, 56, 92, 74,
+        89, 90, 77, 60, 100
+    };
+
+    for (int i = 0; i < size; i++) {
+        students[i].studentFName = firstNames[i];
+        students[i].studentLName = lastNames[i];
+        students[i].testScore = scores[i];
+    }
+}
+
+// (b) Fungsi untuk menentukan grade berdasarkan skor
+void assignGrade(studentType students[], int size) {
+    for (int i = 0; i < size; i++) {
+        int score = students[i].testScore;
+        if (score >= 90)
+            students[i].grade = 'A';
+        else if (score >= 80)
+            students[i].grade = 'B';
+        else if (score >= 70)
+            students[i].grade = 'C';
+        else if (score >= 60)
+            students[i].grade = 'D';
+        else
+            students[i].grade = 'F';
+    }
+}
+
+// (c) Fungsi untuk mencari skor tertinggi
+int findHighestScore(studentType students[], int size) {
+    int highest = students[0].testScore;
+    for (int i = 1; i < size; i++) {
+        if (students[i].testScore > highest)
+            highest = students[i].testScore;
+    }
+    return highest;
+}
+
+// (d) Fungsi untuk mencetak nama siswa dengan skor tertinggi
+void printHighest(const studentType students[], int size, int highestScore) {
+    cout << "\nStudents with the highest test score (" << highestScore << "):\n";
+    for (int i = 0; i < size; i++) {
+        if (students[i].testScore == highestScore) {
+            cout << left << setw(15) << students[i].studentLName << ", "
+                 << students[i].studentFName << endl;
+        }
+    }
+}
+
+// Fungsi tambahan untuk menampilkan semua data
+void printAll(const studentType students[], int size) {
+    cout << left << setw(15) << "Last Name" 
+         << setw(15) << "First Name" 
+         << setw(10) << "Score" 
+         << "Grade" << endl;
+    cout << "------------------------------------------------\n";
+
+    for (int i = 0; i < size; i++) {
+        cout << left << setw(15) << students[i].studentLName
+             << setw(15) << students[i].studentFName
+             << setw(10) << students[i].testScore
+             << students[i].grade << endl;
+    }
+}
+
+int main() {
+    studentType students[NUM_STUDENTS];
+
+    readData(students, NUM_STUDENTS);
+    assignGrade(students, NUM_STUDENTS);
+    int highestScore = findHighestScore(students, NUM_STUDENTS);
+
+    cout << "All Students' Scores:\n";
+    printAll(students, NUM_STUDENTS);
+    printHighest(students, NUM_STUDENTS, highestScore);
+
+    return 0;
+}
